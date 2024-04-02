@@ -77,10 +77,13 @@ class QueryFilter:
         for definition_node in document.definitions:
             if isinstance(definition_node, OperationDefinitionNode):
                 operation_node = cast(OperationDefinitionNode, definition_node)
+                for variable in operation_node.variable_definitions:
+                    context.variables.add(variable.variable.name.value)
                 new_operation = self.filter_operation_node(
                     operation_node,
                     context,
                 )
+
                 if new_operation:
                     definitions.append(new_operation)
 
